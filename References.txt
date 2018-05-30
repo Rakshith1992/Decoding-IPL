@@ -1,0 +1,25 @@
+[1] Why Indians are so Crazy about Cricket? (2014, October 15). Retrieved April 11, 2018, from http://greatlifezone.com/why-indians-are-so-crazy-about-cricket/ [2] Longmore, Andrew. “Indian Premier League.” Encyclopædia Britannica, Encyclopædia Britannica, Inc., 13 Nov. 2017, www.britannica.com/topic/Indian-Premier-League.
+[3] P. Somaskandhan, G. Wijesinghe, L. B. Wijegunawardana, A. Bandaranayake and S. Deegalla, "Identifying the optimal set of attributes that impose high impact on the end results of a cricket match using machine learning," 2017 IEEE International Conference on Industrial and Information Systems (ICIIS), Peradeniya, 2017, pp. 1-6. doi: 10.1109/ICIINFS.2017.8300399
+[4] U. J. Solanki and J. Vala, "Selection for balanced cricket team fourth coming ICC Championship 2017," 2017 2nd International Conference on Communication and Electronics Systems (ICCES), coimbatore, India, 2017, pp. 794-797. doi: 10.1109/CESYS.2017.8321193
+[5] K. Ananthapadmanabha and K. Udayakumar, "Match fixing network analysis to verify nearness among internal participants of a cricket match," 2017 2nd IEEE International Conference on Recent Trends in Electronics, Information & Communication Technology (RTEICT), Bangalore, 2017, pp. 1043-1048. doi: 10.1109/RTEICT.2017.8256758
+[6] H. Ahmad, A. Daud, L. Wang, H. Hong, H. Dawood and Y. Yang, "Prediction of Rising Stars in the Game of Cricket," in IEEE Access, vol. 5, pp. 4104-4124, 2017. doi: 10.1109/ACCESS.2017.2682162
+[7] N. Harikrishna, S. Satheesh, S. D. Sriram and K. S. Easwarakumar, "Temporal classification of events in cricket videos," 2011 National Conference on Communications (NCC), Bangalore, 2011, pp. 1-5. doi: 10.1109/NCC.2011.5734784
+[8] H. Li, Q. He, H. Bao, N. Ma and G. Pang, "Segmental Offset-Mapping Parallel Coordinates for Multidimensional Integer Dataset," 2017 13th International Conference on Computational Intelligence and Security (CIS), Hong Kong, 2017, pp. 419-422. doi: 10.1109/CIS.2017.00097
+[9] R. S. D. A. D. Lima, C. G. R. D. Santos and B. S. Meiguins, "A Visual Representation of Clusters Characteristics Using Edge Bundling for Parallel Coordinates," 2017 21st International Conference Information Visualisation (IV), London, 2017, pp. 90-95. doi: 10.1109/iV.2017.29
+[10] K. Koka and S. Fang, "Online Review Analysis by Visual Feature Selection," 2017 IEEE 15th Intl Conf on Dependable, Autonomic and Secure Computing, 15th Intl Conf on Pervasive Intelligence and Computing, 3rd Intl Conf on Big Data Intelligence and Computing and Cyber Science and Technology Congress(DASC/PiCom/DataCom/CyberSciTech), Orlando, FL, USA, 2017, pp. 1084-1091. doi: 10.1109/DASC-PICom-DataCom-CyberSciTec.2017.176
+[11] Y. Zhang and R. Maciejewski, "Quantifying the Visual Impact of Classification Boundaries in Choropleth Maps," in IEEE Transactions on Visualization and Computer Graphics, vol. 23, no. 1, pp. 371-380, Jan. 2017. doi: 10.1109/TVCG.2016.2598541
+[12] Hongsheng Li and Jiafu Han, "Discovery of population distribution knowledge visually through Lorenz curve and choropleth map," The 2nd International Conference on Information Science and Engineering, Hangzhou, China, 2010, pp. 3657-3660. doi: 10.1109/ICISE.2010.5690467
+[13] Manas. Indian Premier League | Kaggle. November 23, 2017. Accessed March 14, 2018. https://www.kaggle.com/manasgarg/ipl/data/
+[14] "Indian Premier League Official Website." IPLT20.com - Indian Premier League Official Website. Accessed March 14, 2018. http://www.iplt20.com/.
+[15] J. (n.d.). India Map in D3. Retrieved April 11, 2018, from https://gist.github.com/JohnCoogan/1531818 [16] Bostock, M. (n.d.). Data-Driven Documents. Retrieved April 11, 2018, from https://d3js.org/ [17] B. (n.d.). Grayscale - Free One Page Bootstrap Theme. Retrieved April 11, 2018, from https://startbootstrap.com/template-overviews/grayscale/
+[18] "Free Image on Pixabay - Cricket, Sport, New, Zealand." Free photo: Cricket, Sport, New, Zealand - Free Image on Pixabay - 2511043. Accessed March 14, 2018. https://pixabay.com/en/cricket-sport-new-zealand-2511043/
+[19] https://getbootstrap.com/
+[20] https://bl.ocks.org/jasondavies/1341281
+[21] http://bl.ocks.org/syntagmatic/3150059
+[22] http://bl.ocks.org/eesur/1a2514440351ec22f176
+[23]https://bl.ocks.org/mbostock/4060606
+[24]http://bl.ocks.org/palewire/d2906de347a160f38bc0b7ca57721328
+[25]http://bl.ocks.org/stevenae/8362841
+[26]https://bl.ocks.org/AntonOrlov/6b42d8676943cc933f48a43a7c7e5b6c
+[27] https://bl.ocks.org/bricedev/8aaef92e64007f882267
+[28]All images from Pixabay
