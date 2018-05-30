@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+/* Styling for tooltip */
+.tooltip
+{
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: purple;
+  color: #fff;
+  border-radius: 30px;
+}
+select {
+  font-family: Cursive;
+  font-size: 18px;
+  -webkit-appearance: none;
+  background-color:grey;
+  position:relative;
+  z-index:1;
+  top:0;
+  bottom:1000  
+}
+
+svg {
+  font: 10px sans-serif;
+  align:right;
+  right:0;
+  top:0;
+}
+
+.background path {
+fill: none;
+shape-rendering: crispEdges;
+}
+
+.foreground path {
+fill: none;
+stroke: steelblue;
+stroke-width: 2px;
+}
+
+.red {background:red;}
+.green {background:green;}
+.blue  {background:blue ;}
+.yellow {background:yellow ;}
+.brown {background:brown;}
+.lime {background:lime;}
+.teal {background:teal;}
+.indigo {background:indigo;}
+.orange {background:orange;}
+.aqua {background:aqua;}
+
+
+
+.axis line,
+.axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+  cursor: move;
+}
+
+</style>
+<div>
+<button onclick=onBackClick();>Back</button>
+
+</div>
+<select onChange="selectPlayer(this)" size="11" id="playerVal" multiple>
+<option>Virat Kohli</option>
+<option>Chris Gayle</option>
+<option>Lasith Malinga</option>
+<option>Suresh Raina</option>
+<option>Sunil Narine</option>
+<option>Sreesanth</option>
+<option>Shane Watson</option>
+<option>Dwayne Bravo</option>
+<option>Sachin Tendulkar</option>
+<option>Sohail Tanvir</option>
+</select>
+<body background="cricket-662956.jpg">
+
+
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+function onBackClick(){
+ window.history.back();
+}
+
+
+var colors={"Virat Kohli":"red",
+		"Chris Gayle":"green",
+		"Lasith Malinga":"blue",
+		"Suresh Raina":"yellow",
+		"Sunil Narine":"brown",
+		"Sreesanth":"lime",
+		"Shane Watson":"teal",
+		"Dwayne Bravo":"indigo",
+		"Sachin Tendulkar":"orange",
+		"Sohail Tanvir":"aqua"}
+		
+var tooltip = d3.select("body")
+.append("div")
+.style("position", "absolute")
+.style("z-index", "10")
+.style("visibility", "hidden")
+.attr("class","tooltip");
+
+var w=1500;
+var h=620;
+
+var margin ={top: 30, right: 10, bottom: 10, left: 10},
+    width = 1100 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal().rangePoints([0, width], 1),
+    y = {},
+    dragging = {};
+
+var line = d3.svg.line(),
+    axis = d3.svg.axis().orient("left"),
+    background,
+    foreground;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", h)
+  .append("g")
+    .attr("transform", "translate(" + 10+ "," + 150 + ")");
+	
+function texts(x,y,text,fontsize)
+			{
+			svg.append("text")
+				.attr("x", x)
+				.attr("y", y)
+				.attr("fill","white")
+				.attr("font-size",fontsize)
+				.attr("font-family","Impact")
+				.text(text)
+			}
+	
+d3.csv("https://gist.githubusercontent.com/raks929/2d5a8b22d14e11ef308037efaf54e0b5/raw/943b08d3638ac8428fe8aa71f3d31f58392beba9/data.csv", function(error, data) {
+
+  // Creates a scale for each dimension
+  x.domain(dimensions = d3.keys(data[0]).filter(function(d) {
+    return d != "Players" && (y[d] = d3.scale.linear()
+        .domain(d3.extent(data, function(p) { return +p[d]; }))
+        .range([height, 0]));
+  }));
+  
+  
+  
+  
+ background = svg.append("g")
+			.attr("class", "background")
+			.selectAll("path")
+			.data(data)
+			.enter().append("path")
+			.attr("d", path);
+
+foreground = svg.append("g")
+			.attr("class", "foreground")
+			.selectAll("path")
+			.data(data)
+			.enter().append("path")
+			.attr("d", path)	
+			.style("stroke", function(d) {
+				if (d["Players"] =="Virat Kohli")
+					return "red";
+				if (d["Players"] == "Chris Gayle")
+					return "green";
+				if (d["Players"] == "Lasith Malinga")
+					return "blue";
+				if (d["Players"] == "Suresh Raina")
+					return "yellow";
+				if (d["Players"] == "Sunil Narine")
+					return "brown";
+				if (d["Players"] =="Sreesanth")
+					return "lime";
+				if (d["Players"] =="Shane Watson")
+					return "teal";
+				if (d["Players"] =="Dwayne Bravo")
+					return "indigo";
+				if (d["Players"] =="Sachin Tendulkar")
+					return "orange";
+				else
+					return "aqua";
+			})
+			.on("mouseover", function(n){
+				d3.select(this).transition().duration(100)
+				tooltip.text(n["Players"]);
+				return tooltip.style("visibility", "visible");
+			})
+			.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");;})
+			.on("mouseout", function(d){
+				d3.select(this).transition().duration(100)			
+				return tooltip.style("visibility", "hidden");
+			});
+
+  // For each dimension a group element is added
+  var dimen = svg.selectAll(".dimension")
+      .data(dimensions)
+      .enter().append("g")
+      .attr("class", "dimension")
+      .attr("transform", function(d) { return "translate(" + x(d) + ")"; });
+     
+  
+  dimen.append("g")
+      .attr("class", "axis")
+      .each(function(d) { d3.select(this).call(axis.scale(y[d])); })
+    .append("text")
+	
+      .style("text-anchor", "middle")
+      .attr("y", -9)
+      .text(function(d) { return d; });
+	  
+	
+});
+
+
+  texts(100,-100,"STATISTICS OF PLAYERS ACROSS ALL SEASONS FROM 2008-2017","32px");
+function path(d) {
+  return line(dimensions.map(function(p) { return [position(p), y[p](d[p])]; }));
+}
+
+function position(d) {
+  var drag = dragging[d];
+  return drag == null ? x(d) : drag;
+}
+
+  
+function selectPlayer(value){
+	foreground.style("display", function(d) {
+		var slectedPlayer = value.options;
+		var length = slectedPlayer.length;
+		var values = [];
+		for(var option = 0; option<length ; option++){
+			if(slectedPlayer[option].selected){
+				values.push(slectedPlayer[option].value);
+				slectedPlayer[option].style["box-shadow"]="0 0 10px 10px "+colors[slectedPlayer[option].value]+" inset " ;
+			}
+			else {
+				slectedPlayer[option].style["box-shadow"]="0 0 10px 10px "+"white"+" inset " ;
+			}
+		}
+		if(values.indexOf(d["Players"])!=-1){ 
+			return null;
+		}
+		return "none";
+	});
+}
+</script>
+</body>
+</html>

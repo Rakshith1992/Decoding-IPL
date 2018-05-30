@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>India</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.js"></script>
+<style>
+select{
+	position:relative;
+	bottom:300px;
+	}	
+
+.clsSubmit{
+	position:relative;
+	bottom:278px;
+	left:61px;
+	
+		}
+/* Styling the tooltip */
+.d3-tip {
+  line-height: 2;
+  font-weight: bold;
+  padding: 12px;
+  background: grey;
+  color: #fff;
+  border-radius: 30px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+
+</style>
+</head>
+	<div><button onclick=onBackClick();>Back</button></div>
+	<span id = "button"> </span>
+    <body background="cricket-662956.jpg">
+	
+	
+
+        <script type="text/javascript">
+		function onBackClick(){
+			 window.history.back();
+			}
+
+            
+            var w = 800;
+            var h = 600;
+			var val="Bangalore";
+            var projection = d3.geoMercator()
+                        .center([80,25])
+                        .translate([w/2, h/2])
+                        .scale(800);
+
+            
+            var path = d3.geoPath()
+                        .projection(projection);
+
+
+            
+            var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", w)
+                        .attr("height", h);
+
+            var rectangle = svg.append("rect")
+                        .attr("height", h).attr("width", w)
+                        .attr("fill", "transparent")
+                        .attr("stroke", "transparent")
+                        .attr("stroke-width", 1);
+						
+			var tip = d3.tip()
+					  .attr('class', 'd3-tip')
+					  .offset([-10, 0])
+					  .html(function(d) {
+						return "City: <span style='color:Black'>" + d.properties.id + "</span>"+
+						 "<br/>Team: <span style='color:Black'>" + d.properties.Team + "</span>"+
+						"<br/>Ground Capacity: <span style='color:Black'>" + d.properties.Capacity + "</span>"+
+						"<br/>Stadium Name: <span style='color:Black'>" + d.properties.Stadium + "</span>"+
+						"<br/>Average runs scored by a team in a match: <span style='color:Black'>" + d.properties.Avg+ "</span>";
+					  })
+					  
+			svg.call(tip);
+					
+			
+
+            //Load in JSON file
+            d3.json("https://gist.githubusercontent.com/raks929/2b14f5edeffeaf1814837d5ae32298ea/raw/d7e165692e5266779963a7bf8a1b2bdb8c916fc2/states.json", function(json) {
+
+                
+               var bbb=svg.selectAll()
+                   .data(json.features)
+                   .enter()
+                   .append("path")
+                   .attr("d", path)
+				   .attr("fill","green")
+				   .attr("stroke", "grey")
+				   .attr("stroke-width", 1);
+				   
+				var aaa=svg.selectAll()
+					.data(json.features)
+					.enter()
+                    .append("text")
+                    .attr("x", function(d){ return path.centroid(d)[0];})
+					.attr("y", function(d){ return path.centroid(d)[1];})
+					.attr("fill","yellow")
+					.attr("text-anchor","middle")
+					.attr("font-weight", "bold")
+					.text(function(d){ return d.properties.id; })
+					.on('mouseover', tip.show)
+					.on('mouseout', tip.hide);
+					
+		});
+		
+					
+	 var button = d3.select("span")
+  .append("button")
+  .text("Submit")
+  .attr("class","clsSubmit");
+  
+		d3.csv("https://gist.githubusercontent.com/raks929/e0b63f53d0ec0f437737df0fd1409567/raw/bf9511a942179593d2f4b6472ef56f87517f4e0e/avgData.csv", function(error, data) {
+    var select = d3.select("span")
+      .append("select")
+
+    select
+      .on("change", function(d) {
+        val = d3.select(this).property("value");
+      });
+	  
+
+    select.selectAll("option")
+      .data(data)
+      .enter()
+        .append("option")
+		.attr("value", function (d) { return d.Team; })
+        .text(function (d) { return d.Aplayers; });
+	
+  });
+  
+  
+ 
+  
+  
+  button.on("click",function(){
+			var playerName=val
+			console.log(playerName)
+			if(playerName==null)
+			{
+				alert("select a player");
+			}
+			else 
+			{
+			
+		
+			d3.json("https://gist.githubusercontent.com/raks929/2b14f5edeffeaf1814837d5ae32298ea/raw/d7e165692e5266779963a7bf8a1b2bdb8c916fc2/states.json", function(json) { 
+			
+			 var bbb=svg.selectAll()
+                   .data(json.features)
+                   .enter()
+                   .append("path")
+                   .attr("d", path)
+				   .attr("fill","green")
+				   .attr("stroke", "grey")
+				   .attr("stroke-width", 1);
+				   
+				var aaa=svg.selectAll()
+					.data(json.features)
+					.enter()
+                    .append("text")
+                    .attr("x", function(d){ return path.centroid(d)[0];})
+					.attr("y", function(d){ return path.centroid(d)[1];})
+					.attr("fill","yellow")
+					.attr("text-anchor","middle")
+					.attr("font-weight", "bold")
+					.text(function(d){ return d.properties.id; })
+					.on('mouseover', tip.show)
+					.on('mouseout', tip.hide);
+					
+			svg.selectAll("path")
+				.attr("fill", function(d) {
+					if(d.properties.id === playerName)
+					return "red";
+					else 
+					return "green";
+				});	});}});	
+			function texts(x,y,text,fontsize)
+			{
+			svg.append("text")
+				.attr("x", x)
+				.attr("y", y)
+				.attr("fill","white")
+				.attr("font-size",fontsize)
+				.attr("font-family","Impact")
+				.text(text)
+			}
+					
+			texts(100,50,"Below map highlights the city where the selected","32px");	
+			texts(100,90,"player has played the maximum number of matches.","32px");
+
+        </script>
+    </body>
+</html>
