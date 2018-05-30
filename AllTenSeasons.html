@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head></head>
+        <meta charset="utf-8">
+        <title>part 2</title>
+        <script src="http://d3js.org/d3.v4.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.js"></script>
+
+		<style>
+	/* Styling for the tooltip */
+		.d3-tip {
+  line-height: 2;
+  font-weight: bold;
+  padding: 12px;
+  background: grey;
+  color: #fff;
+  border-radius: 30px;
+}
+
+
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}		  
+	select{
+	color:black;
+	font-size:18px;
+	}	
+
+	submit{
+		color:black;
+		font-size:18px;
+		}	
+	
+		  
+		  div.divselect { 
+   position: relative;
+    left: 150px;
+    bottom:950px;
+	
+}
+
+  div.divsubmit { 
+   position: relative;
+    left: 150px;
+    bottom:900px;
+}
+		</style>
+
+<body background="cricket-662956.jpg">
+<button onclick=onBackClick();>Back</button>
+<script>
+function onBackClick(){
+ window.history.back();
+}
+
+var Runs=0;
+	var BatAvg=0;
+	var BatStrikeRate=0;
+	var wic=0;
+	var Econ=0;
+	var BowAvg=0;
+	var value1="Virat Kohli";
+
+	var margin1 = {top: 120, right: 20, bottom: 20, left: 110};
+	var width = 3000 - margin1.right - margin1.left,
+      height = 1000 - margin1.top - margin1.bottom;
+	  
+	var svg = d3.select('body')
+				.append("svg")
+				.attr("width", width + margin1.left + margin1.right)
+				.attr("height", height + margin1.top + margin1.bottom)
+	
+	var tip = d3.tip()
+					  .attr('class', 'd3-tip')
+					  .offset([-10, 0])
+					  .html(function(d) {
+						return "Total Runs: <span style='color:red'>" + Runs + "</span>";
+					  })
+					  
+			svg.call(tip);
+		
+	var tip1 = d3.tip()
+					  .attr('class', 'd3-tip')
+					  .offset([-10, 0])
+					  .html(function(d) {
+						return "Batting Average: <span style='color:red'>" + BatAvg + "</span>";
+					  })
+					  
+			svg.call(tip1);
+	
+	var tip2 = d3.tip()
+					  .attr('class', 'd3-tip')
+					  .offset([-10, 0])
+					  .html(function(d) {
+						return "Batting StrikeRate: <span style='color:red'>" + BatStrikeRate + "</span>";
+					  })
+					  
+			svg.call(tip2);
+			
+	var tip3 = d3.tip()
+					  .attr('class', 'd3-tip')
+					  .offset([-10, 0])
+					  .html(function(d) {
+						return "Wickets: <span style='color:red'>" + wic + "</span>";
+					  })
+					  
+			svg.call(tip3);
+			
+	var tip4 = d3.tip()
+					  .attr('class', 'd3-tip')
+					  .offset([-10, 0])
+					  .html(function(d) {
+						return "Bowling Average: <span style='color:red'>" + BowAvg + "</span>";
+					  })
+					  
+			svg.call(tip4);
+			
+	var tip5 = d3.tip()
+					  .attr('class', 'd3-tip')
+					  .offset([-10, 0])
+					  .html(function(d) {
+						return "Bowling Economy: <span style='color:red'>" + Econ + "</span>";
+					  })
+					  
+			svg.call(tip5);
+	
+				
+	function texts(x,y,text,fontsize)
+			{
+			svg.append("text")
+				.attr("x", x)
+				.attr("y", y)
+				.attr("fill","white")
+				.attr("font-size",fontsize)
+				.attr("font-family","Impact")
+				.text(text)
+			}
+		
+				
+				
+	d3.csv("https://gist.githubusercontent.com/raks929/e0b63f53d0ec0f437737df0fd1409567/raw/bf9511a942179593d2f4b6472ef56f87517f4e0e/avgData.csv", function(error, data) {
+    var select = d3.select("body")
+      .append("div")
+	  .attr("class","divselect")
+      .append("select")
+
+    select
+      .on("change", function(d) {
+        value1 = d3.select(this).property("value");
+		
+        console.log(value1);
+      });
+	  
+
+    select.selectAll("option")
+      .data(data)
+      .enter()
+        .append("option")
+		.attr("value", function (d) { return d.Aplayers; })
+		
+        .text(function (d) { return d.Aplayers; });
+});
+
+  var button = d3.select("body")
+  .append("div")
+  .attr("class","divsubmit")
+  .append("button")
+  .text("Submit");
+  /* On Button click function*/
+  button.on("click",function(){
+			var clickValue=value1;
+			if(clickValue==null)
+			{
+				alert("select a player")
+			}
+			else 
+			{
+			
+			d3.csv("https://gist.githubusercontent.com/raks929/e0b63f53d0ec0f437737df0fd1409567/raw/bf9511a942179593d2f4b6472ef56f87517f4e0e/avgData.csv", function(error, data) {
+			var stat = data.filter(function(d, i) 
+			{ 
+
+            if (d["Aplayers"] == clickValue) 
+            { 
+                return d; 
+            } 
+
+			})
+			
+			texts(150,60,"SELECT A PLAYER FOR AGRREGATE STATISTICS FOR ALL TEN SEASONS","30px");
+			texts(30,193,"Total Runs","16px");
+			texts(30,233,"Batting Average","16px");
+			texts(30,273,"Batting StrikeRate","16px");
+			texts(30,313,"Wickets","16px");
+			texts(30,353,"Bowling Average","16px");
+			texts(30,393,"Bowling Economy","16px");
+			svg.append("rect")
+			.attr("width",13)
+			.attr("height",13)
+			.attr("fill","orange")
+			.attr("x",10)
+			.attr("y",180);
+
+			svg.append("rect")
+			.attr("width",13)
+			.attr("height",13)
+			.attr("fill","red")
+			.attr("x",10)
+			.attr("y",220);
+			svg.append("rect")
+			.attr("width",13)
+			.attr("height",13)
+			.attr("fill","purple")
+			.attr("x",10)
+			.attr("y",260);
+			svg.append("rect")
+			.attr("width",13)
+			.attr("height",13)
+			.attr("fill","green")
+			.attr("x",10)
+			.attr("y",300);
+			svg.append("rect")
+			.attr("width",13)
+			.attr("height",13)
+			.attr("fill","yellow")
+			.attr("x",10)
+			.attr("y",340);
+			svg.append("rect")
+			.attr("width",13)
+			.attr("height",13)
+			.attr("fill","teal")
+			.attr("x",10)
+			.attr("y",380);
+			
+			/* Radial Chart */
+		
+			
+				var full = 2 * Math.PI;
+				g = svg.append("g")
+				.attr("transform","translate(700,500)");
+				var arc1 =  d3.arc()
+							.innerRadius(310)
+							.outerRadius(360)
+							.startAngle(0)
+				var endangle1= ((((stat[0].TotalRuns*100)/4544)/100*360)*3.14/180);
+				Runs=stat[0].TotalRuns;
+				
+				var fade1 = g.append("path")
+					.datum({endAngle: full})
+					.style("fill", "#484848")
+					.attr("d", arc1);
+					
+				var arc2 = g.append("path")
+					.datum({endAngle:endangle1})
+					.style("fill","orange")
+					.attr("d",arc1)
+					.on('mouseover', tip.show)
+					.on('mouseout', tip.hide);
+				
+							
+			
+			
+					
+				
+				var arc3 =  d3.arc()
+							.innerRadius(250)
+							.outerRadius(300)
+							.startAngle(0)
+				var endangle2= ((((stat[0].BattingAvg*100)/37.28)/100*360)*3.14/180);
+				BatAvg=stat[0].BattingAvg;
+				var fade2 = g.append("path")
+					.datum({endAngle: full})
+					.style("fill", "#484848")
+					.attr("d", arc3);
+				
+				var arc4 = g.append("path")
+					.datum({endAngle:endangle2})
+					.style("fill","red")
+					.attr("d",arc3)
+					.on('mouseover', tip1.show)
+					.on('mouseout', tip1.hide);
+   
+			var arc5 =  d3.arc()
+							.innerRadius(190)
+							.outerRadius(240)
+							.startAngle(0)
+			var endangle3=((((stat[0].BattingStrikeRate)*100/158.12)/100*360)*3.14/180);
+			BatStrikeRate=stat[0].BattingStrikeRate;
+			var fade3 = g.append("path")
+					.datum({endAngle: full})
+					.style("fill", "#484848")
+					.attr("d", arc5);
+					
+			var arc6 = g.append("path")
+					.datum({endAngle:endangle3})
+					.style("fill","purple")
+					.attr("d",arc5)
+					.on('mouseover', tip2.show)
+					.on('mouseout', tip2.hide);
+					
+					
+			var arc7 =  d3.arc()
+							.innerRadius(130)
+							.outerRadius(180)
+							.startAngle(0)
+			var endangle4=((((stat[0].TotalWickets)*100/154)/100*360)*3.14/180);
+			wic=stat[0].TotalWickets;
+			var fade4 = g.append("path")
+					.datum({endAngle: full})
+					.style("fill", "#484848")
+					.attr("d", arc7);
+					
+			var arc8 = g.append("path")
+					.datum({endAngle: endangle4})
+					.attr("d",arc7)
+					.style("fill","green")
+					.on('mouseover', tip3.show)
+					.on('mouseout', tip3.hide);
+					
+			var arc9 =  d3.arc()
+							.innerRadius(70)
+							.outerRadius(120)
+							.startAngle(0)
+			var endangle5=((((stat[0].BowlingAvg)*100/44.48)/100*360)*3.14/180);
+			BowAvg=stat[0].BowlingAvg;
+			var fade5 = g.append("path")
+					.datum({endAngle: full})
+					.style("fill", "#484848")
+					.attr("d", arc9);
+					
+			var arc10 = g.append("path")
+					.datum({endAngle: endangle5})
+					.style("fill","yellow")
+					.attr("d",arc9)
+					.on('mouseover', tip4.show)
+					.on('mouseout', tip4.hide);
+					
+					
+			var arc11 =  d3.arc()
+							.innerRadius(30)
+							.outerRadius(60)
+							.startAngle(0)
+			var endangle6=((((stat[0].BowlingEconomy)*100/9.66)/100*360)*3.14/180);
+			Econ=stat[0].BowlingEconomy;
+			var fade6 = g.append("path")
+					.datum({endAngle: full})
+					.style("fill", "#484848")
+					.attr("d", arc11);
+	
+			var arc12 = g.append("path")
+					.datum({endAngle: endangle6})
+					.style("fill","teal")
+					.attr("d",arc11)
+					.on('mouseover', tip5.show)
+					.on('mouseout', tip5.hide);
+		
+			});}});
+			
+			
+			
+	texts(150,60,"SELECT A PLAYER FOR AGRREGATE STATISTICS FOR ALL TEN SEASONS","30px");
+
+</script>
+</body>
+</html>
